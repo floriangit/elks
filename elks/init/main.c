@@ -54,6 +54,7 @@ static char *init_command = binshell;
 #else
 static char *init_command = bininit;
 #endif
+extern int hd_count;
 
 #ifdef CONFIG_BOOTOPTS
 /*
@@ -252,6 +253,7 @@ static void INITPROC try_exec_process(const char *path)
 static void INITPROC do_init_task(void)
 {
     int num;
+    int key;
     const char *s;
 
     mount_root();
@@ -276,14 +278,29 @@ static void INITPROC do_init_task(void)
     heap_add(&opts, sizeof(opts));
     seg_add(DEF_OPTSEG, DMASEG);    /* DEF_OPTSEG through REL_INITSEG */
 
-    /* pass argc/argv/env array to init_command */
 
     /* unset special sys_wait4() processing if pid 1 not /bin/init*/
     if (strcmp(init_command, bininit) != 0)
         current->ppid = 1;      /* turns off auto-child reaping*/
 
-    /* run /bin/init or init= command, normally no return*/
-    run_init_process_sptr(init_command, (char *)argv_init, argv_slen);
+    /* pass argc/argv/env array to init or installation command */
+    if(hd_count > 0 && (ROOT_DEV == DEV_FD0 || ROOT_DEV == DEV_DF0)) {
+choice:
+	/* no return */
+        printk("\nBoot medium is floppy and a hard disk has been found.\n");
+        printk("Do you want to [C]ontinue boot or [I]nstall ELKS?  with <%s> \n", binshell, argv_init[1]);
+        key = wait_for_keypress();
+        if(key == 67 || key == 99)
+            run_init_process_sptr(bininit, (char *)argv_init, argv_slen);
+        else if(key == 73 || key == 105)
+            run_init_process_sptr(binshell, (char *)argv_init, argv_slen);
+        else
+	    goto choice;
+    } else {
+	/* no return */
+        run_init_process_sptr(bininit, (char *)argv_init, argv_slen);
+    }
+
 #else
     try_exec_process(init_command);
 #endif /* CONFIG_BOOTOPTS */

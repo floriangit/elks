@@ -439,12 +439,16 @@ int tty_select(struct inode *inode, struct file *file, int sel_type)
 
 /*
  * Busy wait for a keypress in kernel state
- * Only used in mount_root for changing floppies
+ * Returns key code (ASCII)
  */
 int wait_for_keypress(void)
 {
     set_irq();
-    return chq_wait_rd(&ttys[0].inq, 0);
+    int ret = chq_wait_rd(&ttys[0].inq, 0);
+    if(ret != 0)
+	    halt();
+
+    return (chq_getch(&ttys[0].inq));
 }
 
 static struct file_operations tty_fops = {

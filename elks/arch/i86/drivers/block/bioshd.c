@@ -76,7 +76,7 @@ struct elks_disk_parms {
 
 static int bioshd_initialized = 0;
 static int fd_count = 0;                /* number of floppy disks */
-static int hd_count = 0;                /* number of hard disks */
+/*global*/ int hd_count = 0;                /* number of hard disks */
 
 static int access_count[NUM_DRIVES];    /* device open count */
 struct drive_infot drive_info[NUM_DRIVES];   /* operating drive info */
