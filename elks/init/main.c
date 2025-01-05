@@ -288,7 +288,7 @@ static void INITPROC do_init_task(void)
 choice:
 	/* no return */
         printk("\nBoot medium is floppy and a hard disk has been found.\n");
-        printk("Do you want to [C]ontinue boot or [I]nstall ELKS?  with <%s> \n", binshell, argv_init[1]);
+        printk("Do you want to [C]ontinue booting or [I]nstall ELKS?\n");
         key = wait_for_keypress();
         if(key == 67 || key == 99)
             run_init_process_sptr(bininit, (char *)argv_init, argv_slen);
