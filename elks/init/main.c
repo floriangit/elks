@@ -54,7 +54,7 @@ static char *init_command = binshell;
 #else
 static char *init_command = bininit;
 #endif
-extern int hd_count;
+extern struct drive_infot drive_info;
 
 #ifdef CONFIG_BOOTOPTS
 /*
@@ -246,7 +246,7 @@ static void INITPROC try_exec_process(const char *path)
 {
     int num;
 
-    num = run_init_process(path);
+    num = run_first_process(path);
     if (num) printk("Can't run %s, errno %d\n", path, num);
 }
 
@@ -254,6 +254,7 @@ static void INITPROC do_init_task(void)
 {
     int num;
     int key;
+    int hd_count;
     const char *s;
 
     mount_root();
@@ -283,6 +284,7 @@ static void INITPROC do_init_task(void)
     if (strcmp(init_command, bininit) != 0)
         current->ppid = 1;      /* turns off auto-child reaping*/
 
+    hd_count = bios_gethdinfo(&drive_info);
     /* pass argc/argv/env array to init or installation command */
     if(hd_count > 0 && (ROOT_DEV == DEV_FD0 || ROOT_DEV == DEV_DF0)) {
 choice:
@@ -291,14 +293,14 @@ choice:
         printk("Do you want to [C]ontinue booting or [I]nstall ELKS?\n");
         key = wait_for_keypress();
         if(key == 67 || key == 99)
-            run_init_process_sptr(bininit, (char *)argv_init, argv_slen);
+            run_first_process_sptr(bininit, (char *)argv_init, argv_slen);
         else if(key == 73 || key == 105)
-            run_init_process_sptr(binshell, (char *)argv_init, argv_slen);
+            run_first_process_sptr(binshell, (char *)argv_init, argv_slen);
         else
 	    goto choice;
     } else {
 	/* no return */
-        run_init_process_sptr(bininit, (char *)argv_init, argv_slen);
+        run_first_process_sptr(bininit, (char *)argv_init, argv_slen);
     }
 
 #else

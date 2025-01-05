@@ -169,8 +169,8 @@ extern void put_ustack(register struct task_struct *,int,int);
 
 extern void tswitch(void);
 extern void setsp(void *);
-extern int run_init_process(const char *cmd);
-extern int run_init_process_sptr(const char *cmd, char *sptr, int slen);
+extern int run_first_process(const char *cmd);
+extern int run_first_process_sptr(const char *cmd, char *sptr, int slen);
 extern void ret_from_syscall(void);
 extern void check_stack(void);
 

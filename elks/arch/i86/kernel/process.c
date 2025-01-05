@@ -23,7 +23,7 @@ static char *args[] = {
     NULL        /* 18-19*/
 };
 
-int run_init_process(const char *cmd)
+int run_first_process(const char *cmd)
 {
     int num;
 
@@ -33,7 +33,7 @@ int run_init_process(const char *cmd)
     return num;
 }
 
-int run_init_process_sptr(const char *cmd, char *sptr, int slen)
+int run_first_process_sptr(const char *cmd, char *sptr, int slen)
 {
     int num;
 

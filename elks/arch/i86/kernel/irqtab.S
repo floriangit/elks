@@ -223,7 +223,7 @@ save_regs:
 //
 
 //
-// Called by run_init_process after sys_execve for the init task (/bin/init).
+// Called by run_first_process after sys_execve for the init task (likely /bin/init).
 // Stack setup by kfork_proc(init_task) and arch_build_stack.
 // Switch to kernel stack specified by 'current' and return ax=0 into user mode.
 //
