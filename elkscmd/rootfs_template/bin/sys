@@ -13,42 +13,42 @@ create_dev_dir()
 {
 	echo "Creating /dev"
 	mkdir -p $MNT/dev
-	mknod -p $MNT/dev/hda	b 3 0
-	mknod -p $MNT/dev/hda1	b 3 1
-	mknod -p $MNT/dev/hda2	b 3 2
-	mknod -p $MNT/dev/hda3	b 3 3
-	mknod -p $MNT/dev/hda4	b 3 4
-	mknod -p $MNT/dev/fd0	b 3 32
-	mknod -p $MNT/dev/fd1	b 3 40
-	mknod -p $MNT/dev/df0	b 4 0
-	mknod -p $MNT/dev/df1	b 4 1
-	mknod -p $MNT/dev/kmem	c 1 2
-	mknod -p $MNT/dev/null	c 1 3
-	mknod -p $MNT/dev/zero	c 1 5
-	mknod -p $MNT/dev/tcpdev	c 8 0
-	mknod -p $MNT/dev/ne0	c 9 0
-	mknod -p $MNT/dev/wd0	c 9 1
-	mknod -p $MNT/dev/3c0	c 9 2
-	mknod -p $MNT/dev/ptyp0	c 2 8
-	mknod -p $MNT/dev/ttyp0	c 4 8
-	mknod -p $MNT/dev/tty1	c 4 0
-	mknod -p $MNT/dev/ttyS0	c 4 64
-	mknod -p $MNT/dev/ttyS1	c 4 65
-	mknod -p $MNT/dev/console	c 4 254
+	test -b $MNT/dev/hda || mknod -p $MNT/dev/hda	b 3 0
+	test -b $MNT/dev/hda1 || mknod -p $MNT/dev/hda1	b 3 1
+	test -b $MNT/dev/hda2 || mknod -p $MNT/dev/hda2	b 3 2
+	test -b $MNT/dev/hda3 || mknod -p $MNT/dev/hda3	b 3 3
+	test -b $MNT/dev/hda4 || mknod -p $MNT/dev/hda4	b 3 4
+	test -b $MNT/dev/fd0 || mknod -p $MNT/dev/fd0	b 3 32
+	test -b $MNT/dev/fd1 || mknod -p $MNT/dev/fd1	b 3 40
+	test -b $MNT/dev/df0 || mknod -p $MNT/dev/df0	b 4 0
+	test -b $MNT/dev/df1 || mknod -p $MNT/dev/df1	b 4 1
+	test -c $MNT/dev/kmem || mknod -p $MNT/dev/kmem	c 1 2
+	test -c $MNT/dev/null || mknod -p $MNT/dev/null	c 1 3
+	test -c $MNT/dev/zero || mknod -p $MNT/dev/zero	c 1 5
+	test -c $MNT/dev/tcpdev || mknod -p $MNT/dev/tcpdev	c 8 0
+	test -c $MNT/dev/ne0 || mknod -p $MNT/dev/ne0	c 9 0
+	test -c $MNT/dev/wd0 || mknod -p $MNT/dev/wd0	c 9 1
+	test -c $MNT/dev/3c0 || mknod -p $MNT/dev/3c0	c 9 2
+	test -c $MNT/dev/ptyp0 || mknod -p $MNT/dev/ptyp0	c 2 8
+	test -c $MNT/dev/ttyp0 || mknod -p $MNT/dev/ttyp0	c 4 8
+	test -c $MNT/dev/tty1 || mknod -p $MNT/dev/tty1	c 4 0
+	test -c $MNT/dev/ttyS0 || mknod -p $MNT/dev/ttyS0	c 4 64
+	test -c $MNT/dev/ttyS1 || mknod -p $MNT/dev/ttyS1	c 4 65
+	test -c $MNT/dev/console || mknod -p $MNT/dev/console	c 4 254
 	chmod 0600 $MNT/dev/console
 	mknod -p $MNT/dev/tty	c 4 255
 	chmod 0666 $MNT/dev/tty
 	if test "$small" = "1"; then return; fi
-	mknod -p $MNT/dev/hdb	b 3 8
-	mknod -p $MNT/dev/hdb1	b 3 9
-	mknod -p $MNT/dev/hdb2	b 3 10
-	mknod -p $MNT/dev/hdb3	b 3 11
-	mknod -p $MNT/dev/hdb4	b 3 12
-	mknod -p $MNT/dev/hdc	b 3 16
-	mknod -p $MNT/dev/hdc1	b 3 17
-	mknod -p $MNT/dev/hdd	b 3 24
-	mknod -p $MNT/dev/rd0	b 1 0
-	mknod -p $MNT/dev/rd1	b 1 1
+	test -b $MNT/dev/hdb || mknod -p $MNT/dev/hdb	b 3 8
+	test -b $MNT/dev/hdb1 || mknod -p $MNT/dev/hdb1	b 3 9
+	test -b $MNT/dev/hdb2 || mknod -p $MNT/dev/hdb2	b 3 10
+	test -b $MNT/dev/hdb3 || mknod -p $MNT/dev/hdb3	b 3 11
+	test -b $MNT/dev/hdb4 || mknod -p $MNT/dev/hdb4	b 3 12
+	test -b $MNT/dev/hdc1 || mknod -p $MNT/dev/hdc	b 3 16
+	test -b $MNT/dev/hdc2 || mknod -p $MNT/dev/hdc1	b 3 17
+	test -b $MNT/dev/hdc3 || mknod -p $MNT/dev/hdd	b 3 24
+	test -b $MNT/dev/hdc4 || mknod -p $MNT/dev/rd0	b 1 0
+	test -b $MNT/dev/rd1 || mknod -p $MNT/dev/rd1	b 1 1
 	mknod -p $MNT/dev/tty2	c 4 1
 	mknod -p $MNT/dev/tty3	c 4 2
 	mknod -p $MNT/dev/ttyS2	c 4 66
